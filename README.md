@@ -1,4 +1,4 @@
-# Link-de-Pagamento-iOS
+# Link-de-Pagamento-Android
 
 SDK do Link de Pagamento para Android, feito com Kotlin
 
