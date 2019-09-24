@@ -19,12 +19,11 @@ class KotlinMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_kotlin_main)
         val paymentsLink = CieloPaymentsLinkClient(
             environment = Environment.SANDBOX,
-            clientID = "SEUCLIENTID",
-            clientSecret = "SEUCLIENTSECRET"
+            clientID = "CLIENT_ID",
+            clientSecret = "CLIENT_SECRET"
         )
         val parameters = CieloPaymentsLinkParameters(
-            "Pedido", "4000", SaleType.DIGITAL, ShippingType.WITHOUTSHIPPING,
-            "teste", "1000000000", recurrentInterval = RecurrentInterval.MONTHLY
+            "Pedido", "4000", SaleType.DIGITAL, ShippingType.WITHOUTSHIPPING, recurrentInterval = RecurrentInterval.MONTHLY
         )
 
         paymentsLink.generateLink(parameters, object :
