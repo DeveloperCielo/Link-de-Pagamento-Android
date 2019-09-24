@@ -1,0 +1,52 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildTypes.each {
+        it.buildConfigField('String', 'URL_OAUTH_SANDBOX', "\"https://meucheckoutsandbox.braspag.com.br/api/public/\"")
+        it.buildConfigField('String', 'URL_OAUTH_PRODUCTION', "\"https://cieloecommerce.cielo.com.br/api/public/v2/token/\"")
+        it.buildConfigField('String', 'URL_LINKPAGAMENTOS_SANDBOX', "\"https://meucheckoutsandbox.braspag.com.br/api/public/\"")
+        it.buildConfigField('String', 'URL_LINKPAGAMENTOS_PRODUCTION', "\"https://cieloecommerce.cielo.com.br/api/public/v1/products/\"")
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // retrofit & gson
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+}
+repositories {
+    mavenCentral()
+}
