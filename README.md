@@ -28,7 +28,7 @@ Para utilizar o SDK é necessário implementar no `build.gradle(app:)`:
 ## Uso
 
 Para utilizar o SDK é necessário instanciar **CieloPaymentsLinkClient** e **CieloPaymentsLinkParameters**, chamar a função **generateLink**, 
-passando os parametros e implementar **CieloPaymentsLinkCallbacks**, conforme o exemplo abaixo:
+passando os parametros e implementando **CieloPaymentsLinkCallbacks**, conforme o exemplo abaixo:
 
 ```kotlin
 
