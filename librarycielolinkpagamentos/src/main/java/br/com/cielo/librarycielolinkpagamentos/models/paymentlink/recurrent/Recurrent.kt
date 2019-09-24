@@ -1,4 +1,4 @@
-package br.com.cielo.librarycielolinkpagamentos.models.paymentlink
+package br.com.cielo.librarycielolinkpagamentos.models.paymentlink.recurrent
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

@@ -1,4 +1,9 @@
 package br.com.cielo.librarycielolinkpagamentos.models.paymentlink.shipping
 
-class ShippingType {
+enum class ShippingType {
+    CORREIOS ,
+    FIXEDAMOUNT ,
+    FREE ,
+    WITHOUTSHIPPINGPICKUP ,
+    WITHOUTSHIPPING
 }

@@ -1,4 +1,9 @@
-package br.com.cielo.librarycielolinkpagamentos.models.paymentlink
+package br.com.cielo.librarycielolinkpagamentos.models.paymentlink.recurrent
 
-class RecurrentInterval {
+enum class RecurrentInterval {
+    MONTHLY,
+    BIMONTHLY,
+    QUARTERLY,
+    SEMIANNUAL,
+    ANNUAL
 }

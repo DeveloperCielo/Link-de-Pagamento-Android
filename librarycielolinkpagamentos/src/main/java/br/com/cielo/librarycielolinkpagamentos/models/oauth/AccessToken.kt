@@ -1,4 +1,4 @@
-package br.com.cielo.librarycielolinkpagamentos.models
+package br.com.cielo.librarycielolinkpagamentos.models.oauth
 
 import java.util.*
 
