@@ -12,7 +12,12 @@ SDK do Link de Pagamento para Android, feito com Kotlin
   
 ## Instalação
 
-Para instalar adicione a seguinte linha no `build.gradle(Project:)`:
+Para instalar adicione a permissão de uso da internet no `Android Manifest.xml`:
+```ruby
+    <uses-permission android:name="android.permission.INTERNET"/>
+````
+
+Em seguida adicione no `build.gradle(Project:)`:
 ```ruby
 allprojects {
     repositories {
@@ -21,9 +26,14 @@ allprojects {
 }
 ````
 
-Para utilizar o SDK é necessário implementar no `build.gradle(app:)`:
+E para utilizar o SDK é necessário implementar no `build.gradle(app:)`:
 ```ruby
+dependencies {
+
+    ...
+    
     implementation 'com.github.DeveloperCielo:Link-de-Pagamento-Android:1.0'
+}
 ````
 ## Uso
 
