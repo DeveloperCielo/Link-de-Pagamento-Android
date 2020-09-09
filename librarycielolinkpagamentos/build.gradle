@@ -2,14 +2,34 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
-apply plugin: 'com.github.dcendents.android-maven'
-group = 'com.github.DeveloperCielo'
-version = '1.0'
+ext {
+    bintrayRepo = 'cielo-payment-link'
+    bintrayName = 'cielo-payment-link'
+
+    publishedGroupId = 'br.com.braspag'
+    libraryName = 'cielo-payment-link'
+    artifact = 'cielo-payment-link'
+
+    libraryDescription = 'Android Library para auxiliar na obtenção de Link de Pagamento Cielo'
+
+    siteUrl = 'https://github.com/DeveloperCielo/Link-de-Pagamento-Android'
+    gitUrl = 'https://github.com/DeveloperCielo/Link-de-Pagamento-Android.git'
+
+    libraryVersion = '1.0.1'
+
+    developerId = 'mauricifj'
+    developerName = 'Maurici Ferreira Junior'
+    developerEmail = 'm.f.j@hotmail.com'
+    developerUrl = "https://github.com/Mauricifj"
+
+    licenseName = 'MIT License'
+    licenseUrl = 'https://github.com/developercielo/Link-de-Pagamento-Android/blob/master/LICENSE'
+    allLicenses = ["MIT"]
+}
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
-
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         minSdkVersion 15
@@ -33,6 +53,7 @@ android {
         it.buildConfigField('String', 'URL_OAUTH_PRODUCTION', "\"https://cieloecommerce.cielo.com.br/api/public/v2/token/\"")
         it.buildConfigField('String', 'URL_LINKPAGAMENTOS_SANDBOX', "\"https://meucheckoutsandbox.braspag.com.br/api/public/\"")
         it.buildConfigField('String', 'URL_LINKPAGAMENTOS_PRODUCTION', "\"https://cieloecommerce.cielo.com.br/api/public/v1/products/\"")
+        it.buildConfigField('String', 'X_SDK_VERSION', "\"CieloPaymentLink@$libraryVersion\"")
     }
 }
 
@@ -51,6 +72,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.google.code.gson:gson:2.8.2'
 }
-repositories {
-    mavenCentral()
-}
+
+apply from: 'publish.gradle'

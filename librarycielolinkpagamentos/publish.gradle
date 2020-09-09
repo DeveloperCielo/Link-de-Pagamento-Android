@@ -1,0 +1,90 @@
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'org.jetbrains.dokka'
+
+def pomConfig = {
+    developers {
+        developer {
+            id developerId
+            name developerName
+            email developerEmail
+        }
+    }
+
+    scm {
+        url developerUrl
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    archiveClassifier = 'sources'
+}
+
+task javadocJar(type: Jar) {
+    dependsOn (dokka)
+    archiveClassifier = 'javadoc'
+    from "$buildDir/docs/javadoc"
+}
+
+dokka {
+    outputFormat = 'html-as-java'
+    outputDirectory = "$buildDir/docs/javadoc"
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                artifact sourcesJar
+                artifact javadocJar
+
+                groupId publishedGroupId
+                artifactId artifact
+                version libraryVersion
+
+                pom.withXml {
+                    def root = asNode()
+                    root.appendNode('description', libraryDescription)
+                    root.appendNode('name', libraryName)
+                    root.children().last() + pomConfig
+                }
+            }
+        }
+    }
+}
+
+Properties properties = new Properties()
+if (project.rootProject.file('local.properties').canRead()) {
+    properties.load(project.rootProject.file("local.properties").newDataInputStream())
+    ext.bintray_user = properties.getProperty('BINTRAY_USER')
+    ext.bintray_key = properties.getProperty('BINTRAY_KEY')
+} else {
+    ext.bintray_user = System.getenv('BINTRAY_USER')
+    ext.bintray_key = System.getenv('BINTRAY_KEY')
+}
+
+afterEvaluate {
+    bintray {
+        user = bintray_user
+        key = bintray_key
+        publications = ['release']
+        override = false
+        pkg {
+            repo = bintrayRepo
+            name = bintrayName
+            licenses = allLicenses
+            publish = true
+            vcsUrl = gitUrl
+            publicDownloadNumbers = true
+            version {
+                name = libraryVersion
+                desc = libraryDescription
+                released = new Date()
+                vcsTag = libraryVersion
+            }
+        }
+    }
+}
