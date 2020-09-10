@@ -1,4 +1,4 @@
-# Link-de-Pagamento-Android
+# Link-de-Pagamento-Android [![Status](https://travis-ci.com/DeveloperCielo/Link-de-Pagamento-Android.svg?branch=master)](https://travis-ci.com/DeveloperCielo/Link-de-Pagamento-Android) [ ![Download](https://api.bintray.com/packages/braspag/cielo-payment-link/cielo-payment-link/images/download.svg) ](https://bintray.com/braspag/cielo-payment-link/cielo-payment-link/_latestVersion)
 
 SDK do Link de Pagamento para Android, feito com Kotlin
 
@@ -12,27 +12,16 @@ SDK do Link de Pagamento para Android, feito com Kotlin
   
 ## Instalação
 
-Para instalar adicione a permissão de uso da internet no `Android Manifest.xml`:
-```ruby
+É necessário a permissão de uso da internet no `Android Manifest.xml`:
+```xml
     <uses-permission android:name="android.permission.INTERNET"/>
 ````
 
-Em seguida adicione no `build.gradle(Project:)`:
-```ruby
-allprojects {
-    repositories {
-        maven { url 'https://jitpack.io' }
-    }
-}
-````
-
-E para utilizar o SDK é necessário implementar no `build.gradle(app:)`:
-```ruby
+E para utilizar o SDK é necessário também implementar no `build.gradle(app:)`:
+```groovy
 dependencies {
-
     ...
-    
-    implementation 'com.github.DeveloperCielo:Link-de-Pagamento-Android:1.0'
+    implementation 'br.com.braspag:cielo-payment-link:1.0.2'
 }
 ````
 ## Uso
@@ -50,12 +39,12 @@ class MainActivity : AppCompatActivity() {
 
         val paymentsLink = CieloPaymentsLinkClient(
             environment= Environment.SANDBOX,
-            clientID = "[CLIENT_ID]",
-            clientSecret = "[CLIENT_SECRET]"
+            clientId = "YOUR-CLIENT-ID",
+            clientSecret = "YOUR-CLIENT-SECRET"
         )
         val parameters = CieloPaymentsLinkParameters(
-            "nome_do_pedido", "400000", SaleType.DIGITAL, ShippingType.CORREIOS,
-            "entrega_teste", "10000", recurrentInterval = RecurrentInterval.MONTHLY
+            "order_name", "400000", SaleType.DIGITAL, ShippingType.CORREIOS,
+            "test_deliver", "10000", recurrentInterval = RecurrentInterval.MONTHLY
         )
 
         paymentsLink.generateLink(parameters, object :
