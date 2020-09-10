@@ -70,6 +70,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.6.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.6.0'
+
+    // Cielo OAuth
+    implementation 'br.com.braspag:cieloecommerceoauth:1.1.0'
 }
 
 apply from: 'publish.gradle'

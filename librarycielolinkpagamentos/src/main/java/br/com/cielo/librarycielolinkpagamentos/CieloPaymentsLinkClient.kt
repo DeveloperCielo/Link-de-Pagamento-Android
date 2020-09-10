@@ -1,5 +1,7 @@
 package br.com.cielo.librarycielolinkpagamentos
 
+import br.com.braspag.cieloecommerceoauth.network.HttpCredentialsClient
+import br.com.braspag.cieloecommerceoauth.network.Environment as OAuthEnvironment
 import br.com.cielo.librarycielolinkpagamentos.models.CieloPaymentsLinkParameters
 import br.com.cielo.librarycielolinkpagamentos.models.SaleType
 import br.com.cielo.librarycielolinkpagamentos.models.Transaction
@@ -8,69 +10,65 @@ import br.com.cielo.librarycielolinkpagamentos.models.paymentlink.recurrent.Recu
 import br.com.cielo.librarycielolinkpagamentos.models.paymentlink.shipping.Shipping
 import br.com.cielo.librarycielolinkpagamentos.models.paymentlink.shipping.ShippingType
 import br.com.cielo.librarycielolinkpagamentos.network.LinkPagamentosHttpClient
-import br.com.cielo.librarycielolinkpagamentos.service.Environment
-import br.com.cielo.librarycielolinkpagamentos.service.TokenService
 
 class CieloPaymentsLinkClient(
     private val environment: Environment,
-    private val clientID: String,
-    private val clientSecret: String
+    clientId: String,
+    clientSecret: String
 ) {
+    private var oAuth: HttpCredentialsClient
+
+    init {
+        if (environment == Environment.PRODUCTION)
+            oAuth = HttpCredentialsClient(OAuthEnvironment.PRODUCTION, clientId, clientSecret)
+        else {
+            oAuth = HttpCredentialsClient(OAuthEnvironment.SANDBOX, clientId, clientSecret)
+        }
+    }
 
     fun generateLink(
         parameters: CieloPaymentsLinkParameters,
         callbacks: CieloPaymentsLinkCallbacks
     ) {
 
-        val tokenService = TokenService(environment, clientID, clientSecret)
-        tokenService.getToken(
-            callbacks,
-            onGetTokenCallback = { token ->
-                generateLinkWithToken(parameters, token, callbacks)
-            },
-            onErrorCallback = callbacks::onError
-        )
-    }
+        oAuth.getOAuthCredentials({
+            val client = LinkPagamentosHttpClient(environment)
 
-    private fun generateLinkWithToken(
-        parameters: CieloPaymentsLinkParameters,
-        token: String,
-        callback: CieloPaymentsLinkCallbacks
-    ) {
-        val linkPagamentosHttpClient = LinkPagamentosHttpClient(environment)
+            val saleType = mapSaleType(parameters)
+            val shippingType = mapShippingType(parameters)
+            val recurrentInterval = mapRecurrentInterval(parameters)
 
-        val saleType = mapSaleType(parameters)
-        val shippingType = mapShippingType(parameters)
-        val recurrentInterval = mapRecurrentInterval(parameters)
+            val model = Transaction(
+                type = saleType,
+                name = parameters.name,
+                description = parameters.description,
+                price = parameters.price,
+                weight = parameters.weight,
+                expirationDate = parameters.expirationDate,
+                maxNumberOfInstallments = parameters.maxNumberOfInstallments,
+                showDescription = parameters.showDescription,
+                sku = parameters.sku,
+                shipping = Shipping(
+                    type = shippingType,
+                    name = parameters.shippingName,
+                    price = parameters.shippingPrice,
+                    originZipCode = parameters.shippingOriginZipCode
+                ),
+                recurrent = Recurrent(
+                    interval = recurrentInterval,
+                    endDate = parameters.recurrentEndDate
+                ),
+                softDescriptor = parameters.softDescriptor
+            )
 
-        val model = Transaction(
-            type = saleType,
-            name = parameters.name,
-            description = parameters.description,
-            price = parameters.price,
-            weight = parameters.weight,
-            expirationDate = parameters.expirationDate,
-            maxNumberOfInstallments = parameters.maxNumberOfInstallments,
-            showDescription = parameters.showDescription,
-            sku = parameters.sku,
-            shipping = Shipping(
-                type = shippingType,
-                name = parameters.shippingName,
-                price = parameters.shippingPrice,
-                originZipCode = parameters.shippingOriginZipCode
-            ),
-            recurrent = Recurrent(
-                interval = recurrentInterval,
-                endDate = parameters.recurrentEndDate
-            ),
-            softDescriptor = parameters.softDescriptor
-        )
-
-        linkPagamentosHttpClient.getLink(
-            model, token,
-            onGetLinkCallback = callback::onGetLink,
-            onErrorCallback = callback::onError
-        )
+            client.getLink(
+                model, it.token,
+                onGetLinkCallback = callbacks::onGetLink,
+                onErrorCallback = callbacks::onError
+            )
+        }) {
+            callbacks::onError.invoke(it)
+        }
     }
 
     private fun mapShippingType(parameters: CieloPaymentsLinkParameters): String {
