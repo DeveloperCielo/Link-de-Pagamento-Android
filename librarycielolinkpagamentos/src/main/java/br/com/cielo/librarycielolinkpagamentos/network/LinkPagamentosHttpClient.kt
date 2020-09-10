@@ -5,7 +5,7 @@ import br.com.cielo.librarycielolinkpagamentos.extension.addBearerFormat
 import br.com.cielo.librarycielolinkpagamentos.extension.toStatusCode
 import br.com.cielo.librarycielolinkpagamentos.models.LinkPagamentosApi
 import br.com.cielo.librarycielolinkpagamentos.models.Transaction
-import br.com.cielo.librarycielolinkpagamentos.service.Environment
+import br.com.cielo.librarycielolinkpagamentos.Environment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,10 +20,11 @@ class LinkPagamentosHttpClient(private val environment: Environment) {
 
         val authorizationFormat = token.addBearerFormat()
 
-        val webClient =
-            WebClient(useSandbox(environment))
+        val xSdkVersion = BuildConfig.X_SDK_VERSION
+
+        val webClient = WebClient(useSandbox(environment))
         val call = webClient.createService(LinkPagamentosApi::class.java)
-            .postTransaction(authorizationFormat, model)
+            .postTransaction(authorizationFormat, xSdkVersion, model)
 
         call.enqueue(object : Callback<Transaction> {
             override fun onFailure(call: Call<Transaction>, t: Throwable) {
