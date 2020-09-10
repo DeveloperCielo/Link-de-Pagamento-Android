@@ -9,7 +9,7 @@ import br.com.cielo.librarycielolinkpagamentos.models.SaleType
 import br.com.cielo.librarycielolinkpagamentos.models.Transaction
 import br.com.cielo.librarycielolinkpagamentos.models.paymentlink.recurrent.RecurrentInterval
 import br.com.cielo.librarycielolinkpagamentos.models.paymentlink.shipping.ShippingType
-import br.com.cielo.librarycielolinkpagamentos.service.Environment
+import br.com.cielo.librarycielolinkpagamentos.Environment
 import kotlinx.android.synthetic.main.activity_kotlin_main.*
 
 class KotlinMainActivity : AppCompatActivity() {
@@ -19,11 +19,11 @@ class KotlinMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_kotlin_main)
         val paymentsLink = CieloPaymentsLinkClient(
             environment = Environment.SANDBOX,
-            clientID = "CLIENT_ID",
-            clientSecret = "CLIENT_SECRET"
+            clientId = "YOUR-CLIENT-ID",
+            clientSecret = "YOUR-CLIENT-SECRET"
         )
         val parameters = CieloPaymentsLinkParameters(
-            "Pedido", "4000", SaleType.DIGITAL, ShippingType.WITHOUTSHIPPING, recurrentInterval = RecurrentInterval.MONTHLY
+            "ORDER", "4000", SaleType.DIGITAL, ShippingType.WITHOUTSHIPPING, recurrentInterval = RecurrentInterval.MONTHLY
         )
 
         paymentsLink.generateLink(parameters, object :

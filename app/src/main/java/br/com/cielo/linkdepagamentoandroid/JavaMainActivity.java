@@ -9,7 +9,7 @@ import br.com.cielo.librarycielolinkpagamentos.models.CieloPaymentsLinkParameter
 import br.com.cielo.librarycielolinkpagamentos.models.SaleType;
 import br.com.cielo.librarycielolinkpagamentos.models.Transaction;
 import br.com.cielo.librarycielolinkpagamentos.models.paymentlink.shipping.ShippingType;
-import br.com.cielo.librarycielolinkpagamentos.service.Environment;
+import br.com.cielo.librarycielolinkpagamentos.Environment;
 import org.jetbrains.annotations.NotNull;
 
 public class JavaMainActivity extends AppCompatActivity {
@@ -21,12 +21,12 @@ public class JavaMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_java_main);
         txt1 = this.findViewById(R.id.txt1java);
-        CieloPaymentsLinkClient paymentsLink = new CieloPaymentsLinkClient(Environment.SANDBOX, "SEUCLIENTID",
-                "SEUCLIENTSECRET");
+        CieloPaymentsLinkClient paymentsLink = new CieloPaymentsLinkClient(Environment.SANDBOX, "YOUR-CLIENT-ID",
+                "YOUR-CLIENT-SECRET");
 
         CieloPaymentsLinkParameters parameters = new CieloPaymentsLinkParameters(
-                "Pedido", "4000", SaleType.DIGITAL, ShippingType.WITHOUTSHIPPING,
-                "teste", "1000000000");
+                "ORDER", "4000", SaleType.DIGITAL, ShippingType.WITHOUTSHIPPING,
+                "TEST", "1000000000");
 
         paymentsLink.generateLink(parameters, new CieloPaymentsLinkCallbacks() {
             @Override
