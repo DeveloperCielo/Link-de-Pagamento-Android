@@ -62,16 +62,6 @@ class MainActivity : AppCompatActivity() {
 
 ```
 
-O *Enum* de erro possui as seguintes opções:
-
-* HttpStatusError(status: Int)
-* BadRequest(error: String?)
-* InternalError
-* Unauthorized
-* DecodingError
-* EncodingError
-* EmptyResponseBody
-
 ## Manual
 
 Para mais informações sobre a integração com a API de Link de Pagamentos, vide o manual em: [Link de Pagamento] (https://developercielo.github.io/manual/linkdepagamentos5)
