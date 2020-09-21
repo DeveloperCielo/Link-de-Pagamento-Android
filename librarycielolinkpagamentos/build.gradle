@@ -15,7 +15,7 @@ ext {
     siteUrl = 'https://github.com/DeveloperCielo/Link-de-Pagamento-Android'
     gitUrl = 'https://github.com/DeveloperCielo/Link-de-Pagamento-Android.git'
 
-    libraryVersion = '1.0.2'
+    libraryVersion = '1.0.3'
 
     developerId = 'mauricifj'
     developerName = 'Maurici Ferreira Junior'
