@@ -52,13 +52,11 @@ android {
         it.buildConfigField('String', 'URL_OAUTH_PRODUCTION', "\"https://cieloecommerce.cielo.com.br/api/public/v2/token/\"")
         it.buildConfigField('String', 'URL_LINKPAGAMENTOS_SANDBOX', "\"https://meucheckoutsandbox.braspag.com.br/api/public/\"")
         it.buildConfigField('String', 'URL_LINKPAGAMENTOS_PRODUCTION', "\"https://cieloecommerce.cielo.com.br/api/public/v1/products/\"")
-        it.buildConfigField('String', 'X_SDK_VERSION', "\"CieloPaymentLink@$libraryVersion\"")
+        it.buildConfigField('String', 'X_SDK_VERSION', "\"CieloPaymentLink-Android@$libraryVersion\"")
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
