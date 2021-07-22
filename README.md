@@ -64,4 +64,4 @@ class MainActivity : AppCompatActivity() {
 
 ## Manual
 
-Para mais informações sobre a integração com a API de Link de Pagamentos, vide o manual em: [Link de Pagamento] (https://developercielo.github.io/manual/linkdepagamentos5)
+Para mais informações sobre a integração com a API de Link de Pagamentos, vide o manual em: [Link de Pagamento](https://developercielo.github.io/manual/linkdepagamentos5)
